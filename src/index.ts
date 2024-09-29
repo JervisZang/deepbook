@@ -1,3 +1,7 @@
+import { Ed25519Keypair } from "@mysten/sui/keypairs/ed25519";
+import { decodeSuiPrivateKey } from "@mysten/sui/cryptography";
+import { readFileSync } from "fs";
+
 export function log(...optionalParams: any[]) {
     function getCallerInfo(): string {
         const stack = new Error().stack;
@@ -13,4 +17,8 @@ export function log(...optionalParams: any[]) {
     console.log(getCallerInfo(), ...optionalParams);
 }
 
-log(1);
+let prikey = readFileSync("private_key")
+let prikey2 = decodeSuiPrivateKey(prikey.toString())
+let keypair = Ed25519Keypair.fromSecretKey(prikey2.secretKey)
+let addr = keypair.toSuiAddress()
+log(addr)
