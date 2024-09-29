@@ -43,59 +43,10 @@ const usdc_wormhole = "0x5d4b302506645c37ff133b98c4b50a5ae14841659738d6d733d59d0
     let poolKey = "0x4405b50d791fd3346754e8171aaab6bc2ed26c2c46efdd033c14b30ae507ac33"
     let poolInfo = await deepbook_client.getPoolInfo(poolKey)
     log(poolInfo)
+    let pools = await deepbook_client.getAllPools({limit: 100})
+    log("allPools len", pools.data.length)
+    log(await deepbook_client.getMarketPrice(poolKey))
+    // deepbook_client.getLevel2BookStatus(poolKey, 0 as bigint, 1, "both")
     // let r = await deepbook_client.getLevel2TicksFromMid(poolKey, 1)
     // log(r)
 })()
-
-/*
-export const testnetPools: PoolMap = {
-	DEEP_SUI: {
-		address: `0x0d1b1746d220bd5ebac5231c7685480a16f1c707a46306095a4c67dc7ce4dcae`,
-		baseCoin: 'DEEP',
-		quoteCoin: 'SUI',
-	},
-	SUI_DBUSDC: {
-		address: `0x520c89c6c78c566eed0ebf24f854a8c22d8fdd06a6f16ad01f108dad7f1baaea`,
-		baseCoin: 'SUI',
-		quoteCoin: 'DBUSDC',
-	},
-	DEEP_DBUSDC: {
-		address: `0xee4bb0db95dc571b960354713388449f0158317e278ee8cda59ccf3dcd4b5288`,
-		baseCoin: 'DEEP',
-		quoteCoin: 'DBUSDC',
-	},
-	DBUSDT_DBUSDC: {
-		address: `0x69cbb39a3821d681648469ff2a32b4872739d2294d30253ab958f85ace9e0491`,
-		baseCoin: 'DBUSDT',
-		quoteCoin: 'DBUSDC',
-	},
-};
-
-export const mainnetPools: PoolMap = {
-	DEEP_SUI: {
-		address: ``,
-		baseCoin: 'DEEP',
-		quoteCoin: 'SUI',
-	},
-	SUI_USDC: {
-		address: ``,
-		baseCoin: 'SUI',
-		quoteCoin: 'USDC',
-	},
-	DEEP_USDC: {
-		address: ``,
-		baseCoin: 'DEEP',
-		quoteCoin: 'USDC',
-	},
-	USDT_USDC: {
-		address: ``,
-		baseCoin: 'USDT',
-		quoteCoin: 'USDC',
-	},
-	WUSDC_USDC: {
-		address: ``,
-		baseCoin: 'WUSDC',
-		quoteCoin: 'USDC',
-	},
-};
-*/
