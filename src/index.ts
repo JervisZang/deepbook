@@ -45,8 +45,21 @@ const usdc_wormhole = "0x5d4b302506645c37ff133b98c4b50a5ae14841659738d6d733d59d0
     log(poolInfo)
     let pools = await deepbook_client.getAllPools({limit: 100})
     log("allPools len", pools.data.length)
-    log(await deepbook_client.getMarketPrice(poolKey))
-    // deepbook_client.getLevel2BookStatus(poolKey, 0 as bigint, 1, "both")
-    // let r = await deepbook_client.getLevel2TicksFromMid(poolKey, 1)
-    // log(r)
+    
+    const marketPrice = await deepbook_client.getMarketPrice(poolKey)
+    log("Market Price:", marketPrice)
+
+    // Define the percentage range (e.g., 5%)
+    const percentageRange = 5n
+    
+    if (marketPrice.bestBidPrice && marketPrice.bestAskPrice) {
+        // Calculate lower and upper bounds
+        const lowerPrice = marketPrice.bestBidPrice * (100n - percentageRange) / 100n
+        const upperPrice = marketPrice.bestAskPrice * (100n + percentageRange) / 100n
+
+        let bookStatus = await deepbook_client.getLevel2BookStatus(poolKey, lowerPrice, upperPrice, "both");
+        log("Book Status:", bookStatus);
+    } else {
+        log("Unable to calculate price range: Best bid or ask price is undefined");
+    }
 })()
